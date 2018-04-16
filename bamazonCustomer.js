@@ -10,7 +10,6 @@ var connection = mysql.createConnection({
   database: "bamazon_db"
 });
 
-//ensure connection
 connection.connect(function(err) {
   if (err) throw err;
   //console.log("connected as id " + connection.threadId);
@@ -18,6 +17,9 @@ connection.connect(function(err) {
   connection.end();
 });
 
+
+//displaying all products from mysql
+//having bug with inquirer list choices 
 function displayProducts(){
   connection.query('SELECT * FROM products',function (error, results) {
     if (error) throw error;
