@@ -27,7 +27,6 @@ function displayProducts(){
     var item = ("Item ID: "+ results[i].item_id + ", Name: " + results[i].product_name + ", Price: $ " + results[i].price);
     console.log(item);
     }
-    console.log("ITEM[i]" + item);
     inquirer
     .prompt({
       name: "chooseProduct",
