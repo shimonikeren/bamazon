@@ -13,33 +13,33 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("notebook", "stationary", 3.49, 100);
+VALUES ("notebook", "stationary", 3.49, 10);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("picture frame", "home goods", 4.80, 90);
+VALUES ("picture frame", "home goods", 4.80, 9);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("desk lamp", "home goods", 19.89, 70);
+VALUES ("desk lamp", "home goods", 19.89, 7);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("pencil box", "stationary", 3.50, 80);
+VALUES ("pencil box", "stationary", 3.50, 8);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("set of 4 coasters", "home goods", 9.99, 70);
+VALUES ("set of 4 coasters", "home goods", 9.99, 7);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("external hard drive", "technology", 70.00, 50);
+VALUES ("external hard drive", "technology", 70.00, 5);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("HDMI cord", "technology", 17.70, 50);
+VALUES ("HDMI cord", "technology", 17.70, 5);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("toy truck", "toys", 13.50, 70);
+VALUES ("toy truck", "toys", 13.50, 7);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("rubber duck", "toys", 4.50, 70);
+VALUES ("rubber duck", "toys", 4.50, 7);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("set of 2 pillow cases", "home goods", 18.00, 80);
+VALUES ("set of 2 pillow cases", "home goods", 18.00, 8);
 
 SELECT * FROM products;

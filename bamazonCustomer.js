@@ -1,7 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-//connect to mySQL db
 var connection = mysql.createConnection({
   host: "localhost",
   port: 8889,
@@ -13,56 +12,105 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   //console.log("connected as id " + connection.threadId);
-  displayProducts();
-  connection.end();
+  promptToShopInitial();
 });
 
+function promptToShopInitial(){
+  inquirer
+  .prompt({
+    name: "promptToShop",
+    type: "confirm",
+    message: "Welcome to bamazon! Would you like to shop?"
+  })
+  .then(function(answer) {
+    if(answer.promptToShop){
+      displayProducts();
+    }
+    else {
+      connection.end();
+    }
+  });
+}
 
-//displaying all products from mysql products db
-//having bug with inquirer list choices 
+function promptToShopAgain(){
+  inquirer
+  .prompt({
+    name: "promptToShop",
+    type: "confirm",
+    message: "Sorry, we don't have that quantity. Would you like to keep shopping?"
+  })
+  .then(function(answer) {
+    if(answer.promptToShop){
+      displayProducts();
+    }
+    else {
+      connection.end();
+    }
+  });
+}
+
+/*function userPurchase(){
+  might make a fx for this
+}*/
+
 function displayProducts(){
   connection.query('SELECT * FROM products',function (error, results) {
     if (error) throw error;
+    var itemArray=[];
+    var itemUserChoice = {};
     for (var i =0; i<results.length; i++){
     var item = ("Item ID: "+ results[i].item_id + ", Name: " + results[i].product_name + ", Price: $ " + results[i].price);
-    console.log(item);
+    itemArray.push(item);
+    itemUserChoice[item] = results[i].item_id;  //associate the whole string with just the item id 
     }
     inquirer
     .prompt({
       name: "chooseProduct",
       type: "list",
       message: "Which item would you like to purchase?",
-      choices: [item]
+      choices: itemArray
     })
     .then(function(answer) {
       if (answer.chooseProduct !==null) {
-        console.log(item);
-        console.log("worked " + answer.chooseProduct);
+        var productID = itemUserChoice[answer.chooseProduct];
+        // console.log("item ID: " + productID);
+        quantityChoice(productID);
       }
     });
-
   });
 };
 
+function quantityChoice(productID) {
+  inquirer
+    .prompt({
+      name: "quantityChoice",
+      type: "input",
+      message: "How many do you want to purchase?"
+    })
+    .then(function(answer) {
+      if(answer.quantityChoice != null){
+      // console.log(answer.quantityChoice);
+      checkStock(productID, answer.quantityChoice);
+      }
+    });
+}
 
-
-
-
-
-
-
-//take customer's order [inquirer -list of options to choose from]
-//make sure they agree to price [inquirer confirm: y/n]
-//"Place order" //delete item from stock [if yes: "DELETE x from products WHERE item_name=y"]
-//add money to money earned so far [make a table that holds purchases, then get sum]
-
-//node app:
-//1)display all items available for sale [done]
-  //include id, names, price [done]
-//prompt user with inquirer: [BUG!!!]
-//1)ask: what is the id of the item you want to buy? 
-//2) You want to buy ITEM. how many units of the product do you want?
-//check the db to see if we have enough of that product
-  //if not: "Insufficient quantity. We only have __ left in stock. Feel free to place a smaller order." END the order, do not allow it to go through 
-  //if enough: complete order (ie: update db to reflect remainign quanity)
-    //notify customer of total cost of purchase 
+function checkStock(userItemID, userQuantity) {
+  var dbQuery ='SELECT stock_quantity FROM products WHERE item_id =' + userItemID;
+  connection.query(dbQuery ,function (error, results) {
+    if (error) throw error;
+    if (results[0].stock_quantity >= userQuantity){
+     // userPurchase(); <--if i wana seperate out the function and pass it args
+     //regarding the mysql query: do i need to connection.query EVERY TIME?!
+     console.log("buy thissssss");
+     var dbUpdate = 'UPDATE products SET stock_quantity = ' + [results[0].stock_quantity - userQuantity] +
+     ' WHERE item_id =' + userItemID;
+     var dbSelect = 'SELECT stock_quantity FROM products WHERE item_id =' + userItemID;
+     console.log(dbSelect);
+     //function here for total price of purchase :)
+    }
+    else {
+      promptToShopAgain();
+    }
+ });
+}
