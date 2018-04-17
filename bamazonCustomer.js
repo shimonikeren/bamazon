@@ -11,7 +11,6 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  //console.log("connected as id " + connection.threadId);
   promptToShopInitial();
 });
 
@@ -54,14 +53,15 @@ function finalizePurchase(userItemID, userQuantity, stockQuant, itemPrice, itemN
   ' WHERE item_id =' + userItemID;
   connection.query(queryDB ,function (error, results) {
     if (error) throw error;
+    var totalCost = (userQuantity*itemPrice).toFixed(2);
     if (userQuantity == 1){
     console.log("Thank you for purchasing " + userQuantity + " " + itemName + ".\nYour total cost is: $" +
-    [userQuantity*itemPrice] + "\nHave a great day!");
+    totalCost + "\nHave a great day!");
     connection.end();
     }
     else {
     console.log("Thank you for purchasing " + userQuantity + " " + itemName + "s.\nYour total cost is: $" +
-    [userQuantity*itemPrice] + "\nHave a great day!");
+    totalCost + "\nHave a great day!");
     connection.end();
     }
  });
@@ -96,7 +96,6 @@ function displayProducts(){
     .then(function(answer) {
       if (answer.chooseProduct !==null) {
         var productID = itemUserChoice[answer.chooseProduct];
-        // console.log("item ID: " + productID);
         quantityChoice(productID);
       }
     });
