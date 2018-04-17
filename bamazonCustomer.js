@@ -49,9 +49,32 @@ function promptToShopAgain(){
   });
 }
 
-/*function userPurchase(){
-  might make a fx for this
-}*/
+function finalizePurchase(userItemID, userQuantity, stockQuant, itemPrice, itemName){
+  var queryDB = 'UPDATE products SET stock_quantity = ' + [stockQuant] +
+  ' WHERE item_id =' + userItemID;
+  connection.query(queryDB ,function (error, results) {
+    if (error) throw error;
+    if (userQuantity == 1){
+    console.log("Thank you for purchasing " + userQuantity + " " + itemName + ".\nYour total cost is: $" +
+    [userQuantity*itemPrice] + "\nHave a great day!");
+    connection.end();
+    }
+    else {
+    console.log("Thank you for purchasing " + userQuantity + " " + itemName + "s.\nYour total cost is: $" +
+    [userQuantity*itemPrice] + "\nHave a great day!");
+    connection.end();
+    }
+ });
+  //trying to check that db was updated
+  // var checkDB = "SELECT stock_quantity FROM products WHERE item_ID =" +userItemID;
+  // connection.query(checkDB ,function (error, results) {
+  //   if (error) throw error;
+  //   if (checkDB){
+  //     console.log(checkDB[0].stock_quantity);
+  //   }
+//});
+
+}
 
 function displayProducts(){
   connection.query('SELECT * FROM products',function (error, results) {
@@ -89,25 +112,20 @@ function quantityChoice(productID) {
     })
     .then(function(answer) {
       if(answer.quantityChoice != null){
-      // console.log(answer.quantityChoice);
       checkStock(productID, answer.quantityChoice);
       }
     });
 }
 
 function checkStock(userItemID, userQuantity) {
-  var dbQuery ='SELECT stock_quantity FROM products WHERE item_id =' + userItemID;
+  var dbQuery ='SELECT stock_quantity, price, product_name FROM products WHERE item_id =' + userItemID;
   connection.query(dbQuery ,function (error, results) {
     if (error) throw error;
-    if (results[0].stock_quantity >= userQuantity){
-     // userPurchase(); <--if i wana seperate out the function and pass it args
-     //regarding the mysql query: do i need to connection.query EVERY TIME?!
-     console.log("buy thissssss");
-     var dbUpdate = 'UPDATE products SET stock_quantity = ' + [results[0].stock_quantity - userQuantity] +
-     ' WHERE item_id =' + userItemID;
-     var dbSelect = 'SELECT stock_quantity FROM products WHERE item_id =' + userItemID;
-     console.log(dbSelect);
-     //function here for total price of purchase :)
+    var stockQuant=results[0].stock_quantity;
+    var itemPrice=results[0].price;
+    var itemName=results[0].product_name;
+    if (stockQuant >= userQuantity){
+      finalizePurchase(userItemID, userQuantity, stockQuant, itemPrice, itemName); 
     }
     else {
       promptToShopAgain();
