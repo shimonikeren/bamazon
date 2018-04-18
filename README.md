@@ -31,4 +31,4 @@ Make sure that MAMP is running your server, mysql database is running, and that 
 
 ![GitHub Logo](/images/password.png)
 
-![GitHub Logo](/images/mysql.png)
+![GitHub Logo](/images/mysql2.png)
