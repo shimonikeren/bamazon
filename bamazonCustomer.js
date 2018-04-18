@@ -49,7 +49,7 @@ function promptToShopAgain(){
 }
 
 function finalizePurchase(userItemID, userQuantity, stockQuant, itemPrice, itemName){
-  var queryDB = 'UPDATE products SET stock_quantity = ' + [stockQuant] +
+  var queryDB = 'UPDATE products SET stock_quantity = ' + [stockQuant-userQuantity] +
   ' WHERE item_id =' + userItemID;
   connection.query(queryDB ,function (error, results) {
     if (error) throw error;
@@ -65,15 +65,6 @@ function finalizePurchase(userItemID, userQuantity, stockQuant, itemPrice, itemN
     connection.end();
     }
  });
-  //trying to check that db was updated
-  // var checkDB = "SELECT stock_quantity FROM products WHERE item_ID =" +userItemID;
-  // connection.query(checkDB ,function (error, results) {
-  //   if (error) throw error;
-  //   if (checkDB){
-  //     console.log(checkDB[0].stock_quantity);
-  //   }
-//});
-
 }
 
 function displayProducts(){
