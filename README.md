@@ -27,6 +27,6 @@ Make sure that MAMP is running your server, mysql database is running, and that 
 ### To check the mysql database in your terminal:
 * Type in “mysql –u root –p”
 * You will be prompted to input a password. Type in your password (or the default password “root”)
-* Once you are in, type in “SELECT * FROM bamazon_db.products; (or any mysql query of your choice. 
+* Once you are in, type in “SELECT * FROM bamazon_db.products"; (or any mysql query of your choice. 
 
 ![GitHub Logo](/images/password.png)
