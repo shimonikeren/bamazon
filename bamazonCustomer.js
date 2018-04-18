@@ -73,7 +73,7 @@ function displayProducts(){
     var itemArray=[];
     var itemUserChoice = {};
     for (var i =0; i<results.length; i++){
-    var item = ("Item ID: "+ results[i].item_id + ", Name: " + results[i].product_name + ", Price: $ " + results[i].price);
+    var item = (results[i].product_name + ": $" + results[i].price.toFixed(2));
     itemArray.push(item);
     itemUserChoice[item] = results[i].item_id;  //associate the whole string with just the item id 
     }
