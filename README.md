@@ -18,7 +18,7 @@ Make sure that MAMP is running your server, mysql database is running, and that 
 * In your terminal, once you are in the correct directory, type in “node bamazonCustomer.js”. 
 * From there, the app will prompt you with select options.
 
-## To check the mysql database in your terminal:
+### To check the mysql database in your terminal:
 * Type in “mysql –u root –p”
 * Then type in your password (or the default password “root”)
 * Once you are in, type in “SELECT * FROM bamazon_db.products; (or any mysql query of your choice. 
