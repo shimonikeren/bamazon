@@ -30,3 +30,5 @@ Make sure that MAMP is running your server, mysql database is running, and that 
 * Once you are in, type in “SELECT * FROM bamazon_db.products"; (or any mysql query of your choice. 
 
 ![GitHub Logo](/images/password.png)
+
+![GitHub Logo](/images/mysql.png)
