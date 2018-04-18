@@ -13,7 +13,8 @@ Bamazon is an Amazon-like storefront that stores stock information in a database
 
 ## Before beginning: 
 Make sure that MAMP is running your server, mysql database is running, and that the port listed in the mysql database matches the port in the js code
-![GitHub Logo](/images/host.png) =
+
+![GitHub Logo](/images/host.png) 
 ![GitHub Logo](/images/code .png)
 
 ### To start running the app:
