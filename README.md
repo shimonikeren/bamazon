@@ -16,9 +16,13 @@ Make sure that MAMP is running your server, mysql database is running, and that 
 
 ### To start running the app:
 * In your terminal, once you are in the correct directory, type in “node bamazonCustomer.js”. 
+![GitHub Logo](/images/node.png)
+Format: ![Alt Text](url)
 * From there, the app will prompt you with select options.
 
 ### To check the mysql database in your terminal:
 * Type in “mysql –u root –p”
-* Then type in your password (or the default password “root”)
+![GitHub Logo](/images/password.png)
+Format: ![Alt Text](url)
+* You will be prompted to input a password. Type in your password (or the default password “root”)
 * Once you are in, type in “SELECT * FROM bamazon_db.products; (or any mysql query of your choice. 
