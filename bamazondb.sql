@@ -28,7 +28,7 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Utensil Set", "Home Goods", 9.99, 7);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("External Hard Drive", "Technology", 70.00, 5);
+VALUES ("Hard Drive", "Technology", 70.00, 5);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("HDMI Cord", "Technology", 17.70, 5);
