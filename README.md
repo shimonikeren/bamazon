@@ -7,6 +7,9 @@ This app has different functionality depending who is using it. There are featur
 **Link to App Demo For the Customer Features** 
 [Click Here](https://youtu.be/w-KOVPb3kR4)
 
+**Link to App Demo For the Manager Features** 
+[Click Here](https://www.youtube.com/edit?o=U&video_id=CYA0jKYJSUU)
+
 ### Technologies Used:
 * javascript
 * node.js
