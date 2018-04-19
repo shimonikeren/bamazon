@@ -122,13 +122,13 @@ function addInventory(){
       .then(function(answer) {
         if (answer.chooseProduct !==null) {
           var productID = itemUserChoice[answer.chooseProduct];
-          mathAddInventory(productID);
+          quantToAdd(productID);
         }
       });
     });
   };
 
-function mathAddInventory(productID) {
+function quantToAdd(productID) {
   inquirer
     .prompt({
       name: "addQuantity",
@@ -138,27 +138,98 @@ function mathAddInventory(productID) {
     .then(function(answer) {
       if(answer.addQuantity != null){
       var addQuant = answer.addQuantity;
-        updateStock(productID, addQuant);
+        checkStockQuant(productID, addQuant);
       }
     });
 }
 
-function updateStock(productID, addQuant) {
-var scope= "";
-var checkDB ='SELECT stock_quantity FROM products WHERE item_id =' + productID;
-connection.query(checkDB ,function (error, results) {
+function checkStockQuant(productID, addQuant) {
+    var checkDB ='SELECT stock_quantity FROM products WHERE item_id =' + productID;
+    connection.query(checkDB ,function (error, results) {
     if (error) throw error;
-    var amountInStock = results[0].stock_quantity;
-    scope=amountInStock;
-    console.log("STOCKQUANT= " + scope);
+    var currentStock = results[0].stock_quantity;
+    updateStockQuant(currentStock, addQuant, productID)
     }); 
-var updateDB ='UPDATE products SET stock_quantity = ' + [scope+addQuant] +
+}
+
+function updateStockQuant(currentStock, addQuant, productID){
+var newAmount = parseInt(currentStock) + parseInt(addQuant);
+var updateDB ='UPDATE products SET stock_quantity = ' + newAmount +
 ' WHERE item_id =' + productID;
 connection.query(updateDB ,function (error, results) {
     if (error) throw error;
-    var newAmount = parseInt(scope)+parseInt(addQuant);
-    console.log("newamt=" + newAmount);
-});
+    console.log("You have successfuly added " + addQuant + " units to your inventory. You now have " + newAmount + " units of the selected product.");
+    returnToMenu();
+    });
 }
 
-
+function addProduct(){
+    inquirer
+    .prompt([
+      {
+        name: "name",
+        type: "input",
+        message: "Input Product Name"
+      },
+      {
+        name: "department",
+        type: "input",
+        message: "Input Department Name"
+      },
+      {
+        name: "price",
+        type: "input",
+        message: "Input price per unit",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      },
+      {
+        name: "quantity",
+        type: "input",
+        message: "Input # of units to add",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      }
+    ])
+    .then(function(answer) {
+      connection.query(
+        "INSERT INTO products SET ?",
+        {
+          product_name: answer.name,
+          department_name: answer.department,
+          price: answer.price,
+          stock_quantity: answer.quantity
+        },
+        function(err) {
+          if (err) throw err;
+          var name = answer.name;
+          var depName = answer.department;
+          var price = answer.price;
+          var quant = answer.quantity;
+          console.log("You have successfully added " + quant + " units of " + name + " to your inventory!");
+          returnToMenu();
+        }
+      );
+    });
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
